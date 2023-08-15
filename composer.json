@@ -1,5 +1,5 @@
 {
-  "name": "recursivetree/seat-prices",
+  "name": "recursivetree/seat-prices-core",
   "description": "Price provider system for SeAT",
   "license": "GPL-2.0",
   "type": "seat-plugin",

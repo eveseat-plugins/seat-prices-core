@@ -74,7 +74,7 @@ class PricesServiceProvider extends AbstractSeatPlugin
      */
     public function getPackagistPackageName(): string
     {
-        return 'seat-prices';
+        return 'seat-prices-core';
     }
 
     /**
