@@ -11,8 +11,12 @@
             <h3 class="card-title">{{ trans_choice('pricescore::settings.price_provider_instance', 10) }}</h3>
         </div>
         <div class="card-body">
-
+            {!! $dataTable->table([]) !!}
         </div>
     </div>
 
 @endsection
+
+@push('javascript')
+    {!! $dataTable->scripts() !!}
+@endpush

@@ -3,7 +3,7 @@
 namespace RecursiveTree\Seat\PricesCore\Contracts;
 
 use Illuminate\Support\Collection;
-use RecursiveTree\Seat\Prices\Exceptions\PriceProviderException;
+use RecursiveTree\Seat\PricesCore\Exceptions\PriceProviderException;
 
 abstract class PriceProviderBackend
 {

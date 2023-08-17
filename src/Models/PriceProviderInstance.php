@@ -1,12 +1,12 @@
 <?php
 
-namespace RecursiveTree\Seat\PricesCore\Model;
+namespace RecursiveTree\Seat\PricesCore\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use RecursiveTree\Seat\Prices\Contracts\Priceable;
-use RecursiveTree\Seat\Prices\Contracts\PriceProviderBackend;
-use RecursiveTree\Seat\Prices\Exceptions\PriceProviderException;
+use RecursiveTree\Seat\PricesCore\Contracts\Priceable;
+use RecursiveTree\Seat\PricesCore\Contracts\PriceProviderBackend;
+use RecursiveTree\Seat\PricesCore\Exceptions\PriceProviderException;
 
 /**
  * @property string $name

@@ -2,6 +2,8 @@
 
 return [
 //    'recursive_tree_prices_my_price' => [
-//        'backend'=>MyPriceProviderBackend::class
+//        'backend'=>MyPriceProviderBackend::class,
+//        'label'=>'plugin::my.translation_key',
+//        'plugin'=>'recursivetree/seat-prices-core'
 //    ]
 ];

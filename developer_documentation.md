@@ -16,7 +16,8 @@ There are two ways you can interact with this plugin:
 > TODO
 
 ## Using prices from seat-prices
-Your interaction with price providers will go over the `\RecursiveTree\Seat\Prices\Model\PriceProviderInstance` model.
+Your interaction with price providers will go over the `\RecursiveTree\Seat\PricesCore\Models\PriceProviderInstance` 
+model.
 
 In your settings interface, you should offer an options to select one of the `PriceProviderInstance` models stored in 
 the DB. Store its ID somewhere where you can retrieve it again, for example using SeAT's `setting()` function.
@@ -25,7 +26,7 @@ When you need price data, retrieve the `PriceProviderInstance` model the user co
 It should have a `getPrices()` method to retrieve prices.
 
 ## Writing Price Providers
-Create a class extending from `\RecursiveTree\Seat\Prices\Contracts\PriceProviderBackend` and implement the 
+Create a class extending from `\RecursiveTree\Seat\PricesCore\Contracts\PriceProviderBackend` and implement the 
 `getPrices` method. 
 
 Create a `priceproviders.backends.php` file in your `Config` directory. Add your price provider to it:
