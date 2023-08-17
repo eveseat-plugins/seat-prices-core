@@ -33,6 +33,9 @@ class SettingsController extends \Seat\Web\Http\Controllers\Controller
 
         $route = $backend['settings_route'];
 
-        return redirect()->route($route,['name'=>$request->name]);
+        return redirect()->route($route,[
+            'name'=>$request->name,
+            'backend_type'=>$request->type,
+        ]);
     }
 }

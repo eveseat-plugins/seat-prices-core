@@ -13,6 +13,7 @@ use RecursiveTree\Seat\PricesCore\Exceptions\PriceProviderException;
  * @property string $backend
  * @property array $configuration
  * @property int $id
+ * @method PriceProviderInstance | null find(int $id)
  */
 class PriceProviderInstance extends Model
 {
@@ -43,17 +44,17 @@ class PriceProviderInstance extends Model
     {
         // look up backend implementation class
         $backends = config('priceproviders.backends');
-        if(!array_key_exists($this->name,$backends)){
+        if(!array_key_exists($this->backend,$backends)){
             throw new PriceProviderException(sprintf('Price provider backend \'%s\' not found in price provider backend registry. Has a plugin been uninstalled?',$this->name));
         }
-        $backend_info = $backends[$this->name];
+        $backend_info = $backends[$this->backend];
 
         if(!array_key_exists('backend',$backend_info)) {
             throw new PriceProviderException(sprintf('Backend configuration for \'%s\' is missing a \'backend\' property', $this->name));
         }
         $BackendClass = $backend_info['backend'];
 
-        if(!$BackendClass instanceof PriceProviderBackend){
+        if(!is_subclass_of($BackendClass, PriceProviderBackend::class)){
             throw new PriceProviderException(sprintf('Backend configuration for \'%s\' specifies a backend implementation that doesn\'t implement \'%s\'.', $this->name,PriceProviderBackend::class));
         }
 
