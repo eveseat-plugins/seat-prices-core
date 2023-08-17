@@ -13,6 +13,16 @@ Route::group([
         Route::get('/settings')
             ->name('pricescore::settings')
             ->uses('SettingsController@view')
-            ->middleware('can:pricescore.settings');;
+            ->middleware('can:pricescore.settings');
+
+        Route::get('/instance/new')
+            ->name('pricescore::instance.new')
+            ->uses('SettingsController@newInstance')
+            ->middleware('can:pricescore.settings');
+
+        Route::post('/instance/new')
+            ->name('pricescore::instance.new.post')
+            ->uses('SettingsController@newInstancePost')
+            ->middleware('can:pricescore.settings');
     });
 });

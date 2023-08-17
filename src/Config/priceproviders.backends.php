@@ -5,5 +5,6 @@ return [
 //        'backend'=>MyPriceProviderBackend::class,
 //        'label'=>'plugin::my.translation_key',
 //        'plugin'=>'recursivetree/seat-prices-core'
+//        'settings_route' => 'myplugin::my.route'
 //    ]
 ];
