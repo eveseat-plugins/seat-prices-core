@@ -1,6 +1,6 @@
 <?php
 
-namespace RecursiveTree\Seat\Prices;
+namespace RecursiveTree\Seat\PricesCore;
 
 use Seat\Services\AbstractSeatPlugin;
 
@@ -14,10 +14,19 @@ class PricesServiceProvider extends AbstractSeatPlugin
     public function boot()
     {
         // Inform Laravel how to load migrations
-        $this->add_migrations();
+        $this->addMigrations();
 
-        //publish config
+        // publish config
         $this->addPublications();
+        
+        // add views
+        $this->addViews();
+        
+        // load translations
+        $this->addTranslations();
+
+        // routes
+        $this->addRoutes();
     }
 
     /**
@@ -27,7 +36,8 @@ class PricesServiceProvider extends AbstractSeatPlugin
      */
     public function register(): void
     {
-
+        $this->addPermissions();
+        $this->addSidebarEntries();
     }
 
     private function addPublications(): void
@@ -42,9 +52,39 @@ class PricesServiceProvider extends AbstractSeatPlugin
      * be migrated by laravel. More informations:
      * https://laravel.com/docs/5.5/packages#migrations.
      */
-    private function add_migrations()
+    private function addMigrations(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations/');
+    }
+    
+    private function addViews(): void{
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'pricescore');
+    }
+
+    /**
+     * Include the translations and set the namespace.
+     */
+    private function addTranslations(): void
+    {
+
+        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'pricescore');
+    }
+
+    private function addPermissions(): void {
+        $this->registerPermissions(__DIR__ . '/Config/package.permissions.php', 'pricescore');
+    }
+
+    private function addSidebarEntries(): void {
+        // Include this packages menu items
+        $this->mergeConfigFrom(__DIR__ . '/Config/package.sidebar.settings.php', 'package.sidebar.settings.entries');
+    }
+
+    /**
+     * Include the routes.
+     */
+    private function addRoutes()
+    {
+        $this->loadRoutesFrom(__DIR__ . '/Http/routes.php');
     }
 
     /**

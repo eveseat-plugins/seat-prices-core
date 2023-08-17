@@ -1,6 +1,6 @@
 <?php
 
-namespace RecursiveTree\Seat\Prices\Contracts;
+namespace RecursiveTree\Seat\PricesCore\Contracts;
 
 use Illuminate\Support\Collection;
 use RecursiveTree\Seat\Prices\Exceptions\PriceProviderException;

@@ -11,7 +11,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "\\RecursiveTree\\Seat\\Prices\\": "src/"
+      "\\RecursiveTree\\Seat\\PricesCore\\": "src/"
     }
   },
   "minimum-stability": "dev",
@@ -26,7 +26,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "\\RecursiveTree\\Seat\\Prices\\PricesServiceProvider"
+        "RecursiveTree\\Seat\\PricesCore\\PricesServiceProvider"
       ]
     }
   }

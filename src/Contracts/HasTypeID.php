@@ -1,6 +1,6 @@
 <?php
 
-namespace RecursiveTree\Seat\Prices\Contracts;
+namespace RecursiveTree\Seat\PricesCore\Contracts;
 
 interface HasTypeID
 {

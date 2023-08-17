@@ -1,6 +1,6 @@
 <?php
 
-namespace RecursiveTree\Seat\Prices\Exceptions;
+namespace RecursiveTree\Seat\PricesCore\Exceptions;
 
 use Exception;
 

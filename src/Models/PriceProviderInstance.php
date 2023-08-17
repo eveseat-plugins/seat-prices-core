@@ -1,6 +1,6 @@
 <?php
 
-namespace RecursiveTree\Seat\Prices\Model;
+namespace RecursiveTree\Seat\PricesCore\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
