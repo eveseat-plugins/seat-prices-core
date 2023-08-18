@@ -34,7 +34,8 @@ the `market_prices` table.
 
 Most price provider backends needs configuration associated with them, for example which market to use. A price
 provider instance bundles a backend and it's configuration together and is the interface to plugins consuming prices.
-seat-prices-core provides an user interface for management and configuration of price provider instances.
+seat-prices-core provides an user interface for management and configuration of price provider instances. Plugins 
+consuming prices interact with instances over their ID.
 
 ### PHP Interfaces
 
@@ -44,28 +45,31 @@ An object with a type id.
 
 A basic implementation is available as `RecursiveTree\Seat\PricesCore\Utils\EveType`.
 
-#### Priceable
+#### IPriceable
 
 An object that can be passed to the price provider system so it's value can be evaluated. You pass a list of
-`Priceable`s into the system to get prices, backends also receive a list of `Priceable`s.
+`IPriceable`s into the system to get prices, backends also receive a list of `IPriceable`s.
 
 A basic implementation is available as `RecursiveTree\Seat\PricesCore\Utils\PriceableEveType`.
 
 ## Using prices from seat-prices
 
-Your interaction with price providers will go over the `\RecursiveTree\Seat\PricesCore\Models\PriceProviderInstance`
-model.
+Your interaction with price providers will go over the `\RecursiveTree\Seat\PricesCore\Facades\PriceProviderSystem`
+facade.
 
-In your settings interface, you should offer an options to select one of the `PriceProviderInstance` models stored in
-the DB. Store its ID somewhere where you can retrieve it again, for example using SeAT's `setting()` function. For
+In your settings interface, you should offer an options to select one price provider instance. Store its ID somewhere 
+where you can retrieve it again, for example using SeAT's `setting()` function. For
 convenience, there is a blade partial (`pricescore::utils.instance_selector`) rendering a `<select>` with all available
 options for plugins to include. You can provide it a `id` and `name` option for the respective fields on the `<select>`.
 
-When you need price data, retrieve the `PriceProviderInstance` model the user configured in his settings.
-It should have a `getPrices()` method to retrieve prices. `getPrices()` expects a 
-[laravel collection](https://laravel.com/docs/10.x/collections) of `Priceables` as an argument. It is noteworthy that
-`getPrices()` doesn't return a new list of `Priceable`s, it modifies them using the `Priceable->setPrice(float 
-$price): void` method. The advantage of this is that for example, if you implement `Priceable` on a model, this allows 
+> The partial is currently the only supported way to get an ID, but this is subject to change
+
+When you need price data, you can use `PriceProviderSystem::getPrices()` `getPrices()` expects the ID of a price 
+rpvoider instance and a 
+[laravel collection](https://laravel.com/docs/10.x/collections) of `Priceables` as a second argument. It is noteworthy 
+that
+`getPrices()` doesn't return a new list of `IPriceable`s, it modifies them using the `IPriceable->setPrice(float 
+$price): void` method. The advantage of this is that for example, if you implement `IPriceable` on a model, this allows 
 you to directly store it in its properties. For simple use cases, `RecursiveTree\Seat\PricesCore\Utils\PriceableEveType`
 is available as a basic implementation.
 
@@ -118,7 +122,7 @@ To get them to load in a dev environment, run `vendor:publish --force --all` and
 Some price providers might need to know some additional things to properly compute prices, for example which market
 to use. This is done over the configuration system.
 
-In your `PriceProviderBackend`, configuration is accessible as `$this->configuration`.
+In your `PriceProviderBackend`, configuration is passed as a second argument in the `getPrices` method.
 
 Editing the configuration should be done on the page pointed to by the `settings_route` of the backend registry data.
 The mode automatically handles casting from an array to json for database storage.

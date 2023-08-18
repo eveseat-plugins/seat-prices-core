@@ -5,7 +5,7 @@ namespace RecursiveTree\Seat\PricesCore\Utils;
 use RecursiveTree\Seat\PricesCore\Contracts\HasTypeID;
 use RecursiveTree\Seat\PricesCore\Contracts\IPriceable;
 
-class IPriceableEveType extends EveType implements IPriceable
+class PriceableEveType extends EveType implements IPriceable
 {
     protected float $price;
     protected float $amount;
