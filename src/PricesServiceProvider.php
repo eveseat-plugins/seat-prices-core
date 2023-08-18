@@ -2,6 +2,8 @@
 
 namespace RecursiveTree\Seat\PricesCore;
 
+use RecursiveTree\Seat\PricesCore\Contracts\IPriceProviderManager;
+use RecursiveTree\Seat\PricesCore\Service\PriceProviderManager;
 use Seat\Services\AbstractSeatPlugin;
 
 class PricesServiceProvider extends AbstractSeatPlugin
@@ -38,6 +40,10 @@ class PricesServiceProvider extends AbstractSeatPlugin
     {
         $this->addPermissions();
         $this->addSidebarEntries();
+
+        $this->app->singleton(IPriceProviderManager::class, function () {
+            return new PriceProviderManager();
+        });
     }
 
     private function addPublications(): void

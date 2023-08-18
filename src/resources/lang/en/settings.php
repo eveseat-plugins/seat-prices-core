@@ -21,4 +21,5 @@ return [
     'price_provider_backend_no_backend'   => 'Backend configuration for \':backend\' specifies a backend implementation that doesn\'t implement \':class\'.',
     'instructions_title' => 'Instructions',
     'instructions'       => 'On this page, you can configure the settings of price provider instances used in plugins. A price provider instance is a price provider (a source of price information) combined with its configuration, like which market to use or whether to use sell or buy prices. You have to create and configure the price provider instances on this page to use them in plugins. Plugins using the price provider system should have a setting to select a price provider in their settings.',
+    'price_provider_instance_not_fount' => 'Price provider instance not found.'
 ];
