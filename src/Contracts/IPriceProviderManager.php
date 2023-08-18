@@ -9,7 +9,7 @@ interface IPriceProviderManager
 {
     /**
      * @param int $instance_id
-     * @param Collection<Priceable> $items
+     * @param Collection<IPriceable> $items
      * @throws PriceProviderException
      */
     //TODO if generic type hints ever become available, use them here

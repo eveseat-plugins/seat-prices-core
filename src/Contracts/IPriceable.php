@@ -2,7 +2,7 @@
 
 namespace RecursiveTree\Seat\PricesCore\Contracts;
 
-interface Priceable extends HasTypeID
+interface IPriceable extends HasTypeID
 {
     /**
      * @return int The amount of items to be appraised by a price provider

@@ -4,8 +4,8 @@ namespace RecursiveTree\Seat\PricesCore\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use RecursiveTree\Seat\PricesCore\Contracts\Priceable;
-use RecursiveTree\Seat\PricesCore\Contracts\PriceProviderBackend;
+use RecursiveTree\Seat\PricesCore\Contracts\IPriceable;
+use RecursiveTree\Seat\PricesCore\Contracts\IPriceProviderBackend;
 use RecursiveTree\Seat\PricesCore\Exceptions\PriceProviderException;
 
 /**

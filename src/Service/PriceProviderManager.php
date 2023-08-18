@@ -4,8 +4,8 @@ namespace RecursiveTree\Seat\PricesCore\Service;
 
 use Illuminate\Support\Collection;
 use RecursiveTree\Seat\PricesCore\Contracts\IPriceProviderManager;
-use RecursiveTree\Seat\PricesCore\Contracts\Priceable;
-use RecursiveTree\Seat\PricesCore\Contracts\PriceProviderBackend;
+use RecursiveTree\Seat\PricesCore\Contracts\IPriceable;
+use RecursiveTree\Seat\PricesCore\Contracts\IPriceProviderBackend;
 use RecursiveTree\Seat\PricesCore\Exceptions\PriceProviderException;
 use RecursiveTree\Seat\PricesCore\Models\PriceProviderInstance;
 
@@ -13,7 +13,7 @@ class PriceProviderManager implements IPriceProviderManager
 {
     /**
      * @param int $instance_id
-     * @param Collection<Priceable> $items
+     * @param Collection<IPriceable> $items
      * @throws PriceProviderException
      */
     //TODO if generic type hints ever become available, use them here
@@ -45,8 +45,8 @@ class PriceProviderManager implements IPriceProviderManager
         }
         $BackendClass = $backend_info['backend'];
 
-        if(!is_subclass_of($BackendClass, PriceProviderBackend::class)){
-            throw new PriceProviderException(trans('pricescore::settings.price_provider_backend_no_backend', ['backend'=>$instance->backend,'class'=>PriceProviderBackend::class]));
+        if(!is_subclass_of($BackendClass, IPriceProviderBackend::class)){
+            throw new PriceProviderException(trans('pricescore::settings.price_provider_backend_no_backend', ['backend'=>$instance->backend,'class'=>IPriceProviderBackend::class]));
         }
 
         $backend = new $BackendClass();
