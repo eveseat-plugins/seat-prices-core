@@ -8,19 +8,8 @@ There are two ways you can interact with this plugin:
 
 Both use cases are explained in the following document.
 
-## Architecture
-
-The way you interact with the seat-prices-core depends on what you want to achieve. You can either provide a
-price provider backend or consume data from a price provider instance. A backend is the code responsible for
-providing prices. However, you shouldn't directly interact with a backend. Experience has shown that backends can't
-just take in the items they should appraise and spit out prices, most of the time they also need some configuration like
-which market to use, or whether to use buy or sell prices. Additionally, experience tells most backends need different
-kinds of configuration. Letting plugins that consume prices handle supplying the correct configuration to the correct
-price provider backend is cumbersome and takes their focus away from what they actually want to do: consume prices.
-Therefore, seat-prices-core has another layer: Instances bundle a backend and it's configuration together in an
-easy-to-use bundle for plugins that want to consume prices. Allowing plugins to offer different backends is as simple as
-offering to choose them a instance form a list. Creating and configuring instances is handled over the UI in
-seat-prices-core and the plugin supplying the backend.
+For cases that aren't explained in this document, you can take a look at the source code on 
+[github](https://github.com/recursivetree/seat-prices-core).
 
 ## Installation
 
@@ -34,13 +23,33 @@ Since the default development environment doesn't load dependencies from your pl
 recommended to either install the plugin over your .env file or via the dev env.
 
 ## Concepts
-### Interfaces
+
+### Price Provider Backend
+
+A piece of code that implements a backend to load prices. For example, a fuzzworks backend would contact
+[https://market.fuzzwork.co.uk/](https://market.fuzzwork.co.uk/) or a SeAT core backend would get the prices from
+the `market_prices` table.
+
+### Price Provider Instance
+
+Most price provider backends needs configuration associated with them, for example which market to use. A price
+provider instance bundles a backend and it's configuration together and is the interface to plugins consuming prices.
+seat-prices-core provides an user interface for management and configuration of price provider instances.
+
+### PHP Interfaces
+
 #### HasTypeID
+
 An object with a type id.
 
+A basic implementation is available as `RecursiveTree\Seat\PricesCore\Utils\EveType`.
+
 #### Priceable
-An object that can be passed to the price provider system so it's value can be evaluated. You pass a list of 
+
+An object that can be passed to the price provider system so it's value can be evaluated. You pass a list of
 `Priceable`s into the system to get prices, backends also receive a list of `Priceable`s.
+
+A basic implementation is available as `RecursiveTree\Seat\PricesCore\Utils\PriceableEveType`.
 
 ## Using prices from seat-prices
 
@@ -48,12 +57,20 @@ Your interaction with price providers will go over the `\RecursiveTree\Seat\Pric
 model.
 
 In your settings interface, you should offer an options to select one of the `PriceProviderInstance` models stored in
-the DB. Store its ID somewhere where you can retrieve it again, for example using SeAT's `setting()` function.
+the DB. Store its ID somewhere where you can retrieve it again, for example using SeAT's `setting()` function. For
+convenience, there is a blade partial (`pricescore::utils.instance_selector`) rendering a `<select>` with all available
+options for plugins to include. You can provide it a `id` and `name` option for the respective fields on the `<select>`.
 
 When you need price data, retrieve the `PriceProviderInstance` model the user configured in his settings.
-It should have a `getPrices()` method to retrieve prices. Don't forget to handle errors, backends might throw a 
-`\RecursiveTree\Seat\PricesCore\Exceptions\PriceProviderException` if they fail to get prices. It is recommended to 
-include the error message of the exception in the user-facing error.
+It should have a `getPrices()` method to retrieve prices. `getPrices()` expects a 
+[laravel collection](https://laravel.com/docs/10.x/collections) of `Priceables` as an argument. It is noteworthy that
+`getPrices()` doesn't return a new list of `Priceable`s, it modifies them using the `Priceable->setPrice(float 
+$price): void` method. The advantage of this is that for example, if you implement `Priceable` on a model, this allows 
+you to directly store it in its properties. For simple use cases, `RecursiveTree\Seat\PricesCore\Utils\PriceableEveType`
+is available as a basic implementation.
+
+Don't forget to handle errors, as backends might throw a `\RecursiveTree\Seat\PricesCore\Exceptions\PriceProviderException`
+if they fail to get prices. It is recommended to include the error message of the exception in the user-facing error.
 
 ## Writing Price Providers
 
@@ -81,12 +98,12 @@ return [
 ];
 ```
 
-| Property       | Mandatory | Purpose                                                                                                                                                                                                                                                                                                                                                                            |
-|----------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| backend        | yes       | The class implementing the actual price provider code.                                                                                                                                                                                                                                                                                                                             |
-| label          | yes       | A translation key for the name of the price provider backend.                                                                                                                                                                                                                                                                                                                      |
-| plugin         | yes       | The name of the plugin that provides this price provider backend.                                                                                                                                                                                                                                                                                                                  |
-| settings_route | yes       | When creating a new instance of this backend, this route will be invoked.  It might contain a 'name' query parameter containing the name of the instance. This route should display an additional page where users can enter the configuration for this backend. Afterwards, the plugin that supplies the backend is responsible for creating a new price provider instance model. |
+| Property       | Mandatory | Purpose                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|----------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| backend        | yes       | The class implementing the actual price provider code.                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| label          | yes       | A translation key for the name of the price provider backend.                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| plugin         | yes       | The name of the plugin that provides this price provider backend.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| settings_route | yes       | When creating a new or editing an existing price provider instance of this backend, this route will be invoked. When editing, a 'id' query parameter is supplied. When creating a new instance, a 'name' query parameter containing the name of the instance is included. This route should display an additional page where users can enter the configuration for this backend. Afterwards, the plugin that supplies the backend is responsible for creating or updating a the price provider instance model. |
 
 Lastly, you need to merge the config in your service provider's boot method:
 
@@ -101,6 +118,7 @@ To get them to load in a dev environment, run `vendor:publish --force --all` and
 Some price providers might need to know some additional things to properly compute prices, for example which market
 to use. This is done over the configuration system.
 
-> TODO: How to create configuration
-
 In your `PriceProviderBackend`, configuration is accessible as `$this->configuration`.
+
+Editing the configuration should be done on the page pointed to by the `settings_route` of the backend registry data.
+The mode automatically handles casting from an array to json for database storage.
