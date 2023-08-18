@@ -38,15 +38,15 @@ Route::group([
 
     Route::group([
         'middleware' => ['web', 'auth', 'locale'],
-        'prefix' => 'configuration/prices-core/instance/new/builtin',
+        'prefix' => 'configuration/prices-core/instance/new',
     ], function () {
         // Config route for builtin providers
-        Route::get('/instance/new/backends/configless')
+        Route::get('/builtin')
             ->name('pricescore::instance.new.builtin')
             ->uses('SeatPriceProviderController@newSeatPriceProvider')
             ->middleware('can:pricescore.settings');
 
-        Route::post('/instance/new/backends/configless')
+        Route::post('/builtin')
             ->name('pricescore::instance.new.builtin.post')
             ->uses('SeatPriceProviderController@newSeatPriceProviderPost')
             ->middleware('can:pricescore.settings');
