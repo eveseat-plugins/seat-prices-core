@@ -50,14 +50,12 @@ class PriceProviderInstance extends Model
         $backend_info = $backends[$this->backend];
 
         if(!array_key_exists('backend',$backend_info)) {
-            //TODO translation keys
-            throw new PriceProviderException(sprintf('Backend configuration for \'%s\' is missing a \'backend\' property', $this->backend));
+            throw new PriceProviderException(trans('pricescore::settings.price_provider_backend_impl_missing',['backend'=>$this->backend]));
         }
         $BackendClass = $backend_info['backend'];
 
         if(!is_subclass_of($BackendClass, PriceProviderBackend::class)){
-            //TODO translation keys
-            throw new PriceProviderException(sprintf('Backend configuration for \'%s\' specifies a backend implementation that doesn\'t implement \'%s\'.', $this->backend,PriceProviderBackend::class));
+            throw new PriceProviderException(trans('pricescore::settings.price_provider_backend_no_backend', ['backend'=>$this->backend,'class'=>PriceProviderBackend::class]));
         }
 
         $backend = new $BackendClass($this->configuration);
