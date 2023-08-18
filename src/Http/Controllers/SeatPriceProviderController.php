@@ -12,19 +12,31 @@ class SeatPriceProviderController extends Controller
 
     public function newSeatPriceProvider(Request $request){
         $request->validate([
-            'name'=>'required|string',
-            'backend_type'=>['required', new BackendType()]
+            'name'=>'nullable|string',
+            'backend_type'=>['required', new BackendType()],
+            'id'=>'nullable|integer',
+            'edit'=>'nullable|bool'
         ]);
 
-        return view('pricescore::instance.new_seat', ['name'=>$request->name]);
+        $instance = PriceProviderInstance::find($request->id);
+
+        $name = $request->name ?? $instance->name ?? "";
+        $config = $instance->configuration ?? ['price_type'=>'adjusted_price'];
+
+        return view('pricescore::instance.new_seat', ['name'=>$name, 'id'=>$request->id, 'config'=>$config]);
     }
     public function newSeatPriceProviderPost(Request $request){
         $request->validate([
             'name'=>'required|string',
-            'type'=>"required|string|in:adjusted_price,highest,lowest,sell_price,buy_price,average_prices,average"
+            'type'=>'required|string|in:adjusted_price,highest,lowest,sell_price,buy_price,average_prices,average',
+            'id' => 'nullable|integer'
         ]);
 
         $instance = new PriceProviderInstance();
+        if($request->id){
+            $instance = PriceProviderInstance::find($request->id);
+        }
+
         $instance->name = $request->name;
         $instance->backend = 'seat_prices_core_seat_prices_provider';
         $instance->configuration = ['price_type'=>$request->type];

@@ -22,6 +22,10 @@ class PriceProviderInstanceDataTable extends DataTable
                 $info = $backends[$row->backend] ?? [];
                 return sprintf("%s (%s)",trans($info['label'] ?? 'web::seat.unknown'), trans($info['plugin'] ?? 'pricescore::settings.unknown_plugin'));
             })
+            ->addColumn('actions', function ($row){
+                return view('pricescore::instance.actions',['id'=>$row->id])->render();
+            })
+            ->rawColumns(['actions'])
             ->make(true);
     }
 
@@ -49,6 +53,7 @@ class PriceProviderInstanceDataTable extends DataTable
         return [
             ['data' => 'name', 'title' => 'Name'],
             ['data' => 'backend', 'title' => 'Backend'],
+            ['data' => 'actions', 'title'=> 'Actions', 'className'=>'text-right'],
         ];
     }
 }

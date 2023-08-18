@@ -24,6 +24,16 @@ Route::group([
             ->name('pricescore::instance.new.post')
             ->uses('SettingsController@newInstancePost')
             ->middleware('can:pricescore.settings');
+
+        Route::post('/instance/delete')
+            ->name('pricescore::instance.delete.post')
+            ->uses('SettingsController@deleteInstancePost')
+            ->middleware('can:pricescore.settings');
+
+        Route::get('/instance/edit')
+            ->name('pricescore::instance.edit')
+            ->uses('SettingsController@editInstance')
+            ->middleware('can:pricescore.settings');
     });
 
     Route::group([

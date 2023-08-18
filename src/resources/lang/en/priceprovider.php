@@ -7,7 +7,7 @@ return [
     'average_prices'=>'Average Prices (ESI market prices)',
     'price_type'=>'Price Type',
     'adjusted_price'=>'Adjusted Prices',
-    'create' => 'Create',
+    'save' => 'Save',
     'average'=> 'Average Prices (ESI market history)',
     'highest'=>'Highest Prices',
     'lowest'=>'Lowest Prices',
