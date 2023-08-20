@@ -11,7 +11,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "\\RecursiveTree\\Seat\\PricesCore\\": "src/"
+      "RecursiveTree\\Seat\\PricesCore\\": "src/"
     }
   },
   "minimum-stability": "dev",
