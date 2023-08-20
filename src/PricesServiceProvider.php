@@ -110,7 +110,7 @@ class PricesServiceProvider extends AbstractSeatPlugin
      */
     public function getPackageRepositoryUrl(): string
     {
-        return 'https://todo.com';
+        return 'https://github.com/recursivetree/seat-prices-core';
     }
 
     /**
