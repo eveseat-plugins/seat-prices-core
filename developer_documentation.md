@@ -39,18 +39,24 @@ consuming prices interact with instances over their ID.
 
 ### PHP Interfaces
 
-#### HasTypeID
+We are currently in the process of moving some parts of seat-prices-core to the seat core. The following interfaces 
+were recently moved to `eveseat/services`: `\RecursiveTree\Seat\PricesCore\Contracts\HasTypeID` and 
+`\RecursiveTree\Seat\PricesCore\Contracts\IPriceable`. The old interfaces will still be available for a while, but 
+are deprecated and will be eventually removed. The same goes for their example implementations 
+`\RecursiveTree\Seat\PricesCore\Utils\EveType` and `\RecursiveTree\Seat\PricesCore\Utils\PriceableEveType`.
+
+#### Seat\Services\Contracts\HasTypeID
 
 An object with a type id.
 
-A basic implementation is available as `RecursiveTree\Seat\PricesCore\Utils\EveType`.
+A basic implementation is available as `Seat\Services\Items\EveType`.
 
-#### IPriceable
+#### Seat\Services\Contracts\IPriceable
 
 An object that can be passed to the price provider system so it's value can be evaluated. You pass a list of
 `IPriceable`s into the system to get prices, backends also receive a list of `IPriceable`s.
 
-A basic implementation is available as `RecursiveTree\Seat\PricesCore\Utils\PriceableEveType`.
+A basic implementation is available as `Seat\Services\Items\PriceableEveType`.
 
 ## Using prices from seat-prices
 

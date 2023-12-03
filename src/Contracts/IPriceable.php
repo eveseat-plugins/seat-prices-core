@@ -2,7 +2,7 @@
 
 namespace RecursiveTree\Seat\PricesCore\Contracts;
 
-use \Seat\Services\Contracts\IPriceable as CoreIPriceable;
+use Seat\Services\Contracts\IPriceable as CoreIPriceable;
 
 /**
  * @deprecated Use \Seat\Services\Contracts\IPriceable instead
