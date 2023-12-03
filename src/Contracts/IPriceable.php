@@ -2,17 +2,12 @@
 
 namespace RecursiveTree\Seat\PricesCore\Contracts;
 
-interface IPriceable extends HasTypeID
-{
-    /**
-     * @return int The amount of items to be appraised by a price provider
-     */
-    public function getAmount(): int;
+use \Seat\Services\Contracts\IPriceable as CoreIPriceable;
 
-    /**
-     * Set the price of this object
-     * @param float $price
-     * @return void
-     */
-    public function setPrice(float $price): void;
+/**
+ * @deprecated Use \Seat\Services\Contracts\IPriceable instead
+ */
+interface IPriceable extends CoreIPriceable
+{
+
 }

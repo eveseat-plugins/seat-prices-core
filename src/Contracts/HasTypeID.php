@@ -2,10 +2,12 @@
 
 namespace RecursiveTree\Seat\PricesCore\Contracts;
 
-interface HasTypeID
+use \Seat\Services\Contracts\HasTypeID as CoreHasTypeID;
+
+/**
+ * @deprecated Use \Seat\Services\Contracts\HasTypeID instead
+ */
+interface HasTypeID extends CoreHasTypeID
 {
-    /**
-     * @return int The eve type id of this object
-     */
-    public function getTypeID(): int;
+
 }
