@@ -2,9 +2,9 @@
 
 namespace RecursiveTree\Seat\PricesCore\PriceProviders;
 use Illuminate\Support\Collection;
-use RecursiveTree\Seat\PricesCore\Contracts\IPriceable;
 use RecursiveTree\Seat\PricesCore\Contracts\IPriceProviderBackend;
 use Seat\Eveapi\Models\Sde\InvType;
+use Seat\Services\Contracts\IPriceable;
 
 class SeatPricesPriceProvider implements IPriceProviderBackend
 {

@@ -4,10 +4,10 @@ namespace RecursiveTree\Seat\PricesCore\Service;
 
 use Illuminate\Support\Collection;
 use RecursiveTree\Seat\PricesCore\Contracts\IPriceProviderManager;
-use RecursiveTree\Seat\PricesCore\Contracts\IPriceable;
 use RecursiveTree\Seat\PricesCore\Contracts\IPriceProviderBackend;
 use RecursiveTree\Seat\PricesCore\Exceptions\PriceProviderException;
 use RecursiveTree\Seat\PricesCore\Models\PriceProviderInstance;
+use Seat\Services\Contracts\IPriceable;
 
 class PriceProviderManager implements IPriceProviderManager
 {

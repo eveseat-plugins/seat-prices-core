@@ -12,7 +12,7 @@ interface IPriceProviderBackend
      * Implementations should store the computed price directly on the Priceable object using the setPrice method.
      * In case an error occurs, a PriceProviderException should be thrown, so that an error message can be shown to the user.
      *
-     * @param Collection<IPriceable> $items The items to appraise
+     * @param Collection<\Seat\Services\Contracts\IPriceable> $items The items to appraise
      * @param array $configuration The configuration of this price provider backend.
      * @throws PriceProviderException
      */
