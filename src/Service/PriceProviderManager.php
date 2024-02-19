@@ -19,6 +19,9 @@ class PriceProviderManager implements IPriceProviderManager
     //TODO if generic type hints ever become available, use them here
     public function getPrices(int $instance_id, Collection $items): void
     {
+        // if a plugin requests prices for no item, don't forward the call to a price provider since they might not check for this and make an API call
+        if($items->isEmpty()) return;
+
         $instance = PriceProviderInstance::find($instance_id);
         if($instance === null) {
             throw new PriceProviderException(trans('pricescore::settings.price_provider_instance_not_fount'));
