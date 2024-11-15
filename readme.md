@@ -11,9 +11,13 @@ price providers](#available-price-providers) in order to get more price sources.
 | SeAT Prices             | All kinds of prices the SeAT core includes. Included per default.                                                | recursivetree/seat-prices-core (included per default) |
 | EvePraisal              | Uses the API of an evepraisal instance to get prices.                                                            | recursivetree/seat-prices-evepraisal                  |
 | Item Manufacturing Time | Exotic price provider that values items based on the time it takes to build them. Part of seat-alliance-industry | recursivetree/seat-alliance-industry                  |
-| EveMarketer             | Uses the evemarketer.com API to get prices                                                                       | recursivetree/seat-prices-evemarketer                 |
 | Fuzzwork                | Prices from fuzzwork market data for the seat-prices-core price provider system.                                 | cryptatech/seat-prices-fuzzwork                       | 
 | Janice                  | Prices from janice for the seat-prices-core price provider system.                                               | cryptatech/seat-prices-janice                         |
+
+## Deprecated Price Providers
+| Price Provider          | Description                                                                                                      | Plugin                                                |
+|-------------------------|------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| EveMarketer             | Uses the evemarketer.com API to get prices                                                                       | recursivetree/seat-prices-evemarketer                 |
 
 ## Developer Documentation
 The developer documentation can be found [here](developer_documentation.md).
